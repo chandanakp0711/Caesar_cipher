@@ -1,0 +1,54 @@
+def caesar_cipher_encrypt(text, shift):
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            shift_base = 65 if char.isupper() else 97
+            encrypted_char = chr((ord(char) - shift_base + shift) % 26 + shift_base)
+            encrypted_text += encrypted_char
+        else:
+            encrypted_text += char
+    return encrypted_text
+
+def caesar_cipher_decrypt(text, shift):
+    # Always reverse the shift for decryption
+    return caesar_cipher_encrypt(text, -shift)
+
+def parse_shift(shift_input):
+    try:
+        shift = int(shift_input)
+        return shift
+    except ValueError:
+        print("Invalid shift value. Please enter a valid integer.")
+        return None
+
+def main():
+    print("Caesar Cipher Program")
+    while True:
+        print("\nChoose an option:")
+        print("1. Encrypt a message")
+        print("2. Decrypt a message")
+        print("3. Exit")
+        choice = input("Enter your choice (1/2/3): ")
+
+        if choice == '1':
+            message = input("Enter the message to encrypt: ")
+            shift_input = input("Enter the shift value: ")
+            shift = parse_shift(shift_input)
+            if shift is not None:
+                encrypted_message = caesar_cipher_encrypt(message, shift)
+                print("Encrypted Message:", encrypted_message)
+        elif choice == '2':
+            message = input("Enter the message to decrypt: ")
+            shift_input = input("Enter the shift value: ")
+            shift = parse_shift(shift_input)
+            if shift is not None:
+                decrypted_message = caesar_cipher_decrypt(message, shift)
+                print("Decrypted Message:", decrypted_message)
+        elif choice == '3':
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
